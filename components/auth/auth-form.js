@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import classes from './auth-form.module.css';
 
 async function createUser(email, password) {
+  //todo: fetch api signup function
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
     body: JSON.stringify({ email, password }),
@@ -16,6 +17,7 @@ async function createUser(email, password) {
   const data = await response.json();
 
   if (!response.ok) {
+    console.error('server error may occurred');
     throw new Error(data.message || 'Something went wrong!');
   }
 
@@ -57,7 +59,7 @@ function AuthForm() {
         const result = await createUser(enteredEmail, enteredPassword);
         console.log(result);
       } catch (error) {
-        console.log(error);
+        console.error('OPS ! ',error);
       }
     }
   }
