@@ -24,7 +24,14 @@ async function handler(req,res){
     const db =client.db();
 
 //todo: 2- store our user data in users collection
-    const hashedPassword = await hashPassword(password);
+  //check if this email aLREADY EXIST
+  const existUser = await db.collection('users').findOne({ email: email });
+  if (existUser) { 
+    res.status(422).json({ message: 'Email Already registerd !' });
+    client.close();
+    return;
+  }
+  const hashedPassword = await hashPassword(password);
     const user = await db.collection('users').insertOne({
           email: email,
           password: hashedPassword,

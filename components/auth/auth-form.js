@@ -44,6 +44,7 @@ function AuthForm() {
     // optional: Add validation
 
     if (isLogin) {
+      //setting redirect with false  becouse I just need to show error message not redirected to an other page 
       const result = await signIn('credentials', {
         redirect: false,
         email: enteredEmail,
